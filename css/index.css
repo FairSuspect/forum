@@ -1,0 +1,20 @@
+a.nav {
+	position: relative;
+	bottom: 10%;
+	left: 10px;
+}
+code {
+	background-color: #111111;
+	display: inline-block;
+	color: LightSkyBlue;
+}
+.alpha{
+	position: fixed;
+	bottom: 10px;
+	color: #FF4444;
+	right: 10px;
+	transform: rotate(-45deg);
+	font-size: 50pt;
+	border: 6px solid #FF4444;
+}
+	

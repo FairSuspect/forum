@@ -1,0 +1,31 @@
+form {
+	padding: 10px;
+	background-color: #dddddd;
+	position: relative;
+	color: red;
+	
+}
+form.minus{
+	position: fixed;
+	top:4.25cm;
+	left: 25%;
+	
+	
+}
+body {
+	background-color: LightSkyBlue;
+}
+
+result{
+	position: relative;
+	top:10px;
+	text-align:center;
+	font-size: 20pt;
+	border: 2px solid white;
+	border-radius: 10px;
+	
+}
+p.navigation {
+	
+	
+}

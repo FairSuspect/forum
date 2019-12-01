@@ -1,0 +1,94 @@
+body {
+	background-color: #444444;
+	
+}
+
+h1 {
+	font-family:  Tahoma;
+	font-size: 125px;
+	color: #FF7700;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	
+}
+num {
+	position:relative;
+	left: 36%;
+	font-family:  Tahoma;
+	font-size: 75px;
+	color: #FF9922;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	
+	
+}
+
+num.dash {
+	position:relative;
+	left: 39%;
+	font-family:  Tahoma;
+	font-size: 75px;
+	color: #FF9922;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	
+	
+}
+num.num1 {
+	position:relative;
+	
+	left: 55.5%;
+	font-family:  Tahoma;
+	font-size: 75px;
+	color: #FF9922;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	
+	
+}
+num.text {
+	position:relative;
+	
+	left: 43.5%;
+	font-family:  Tahoma;
+	font-size: 75px;
+	color: #FF9922;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	
+	
+}
+a:visited {
+  color: #FF9922;
+}
+
+input {
+	position:relative;
+	left: 32%;
+	font-size: 40px;
+	top: 10px;
+	background-color:#FF7700;
+	color: #444444;
+	cursor: pointer;
+}
+input.sec {
+	position:relative;
+	font-size: 40px;
+	top: 10px;
+	left: 46.5%;
+	background-color:#FF7700;
+	color: #444444;
+	cursor: pointer;
+}
+
+	num.dash1 {
+	
+	position:fixed;
+	left: 60%;
+	font-family:  Tahoma;
+	font-size: 75px;
+	color: #FF9922;
+	-webkit-text-stroke-width:1px;
+	-webkit-text-stroke-color: black;
+	}
+	

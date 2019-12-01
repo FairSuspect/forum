@@ -1,0 +1,35 @@
+body {
+	background-color: #222222;
+	color: #FF4444;
+	text-align: center;
+	// -webkit-text-stroke: 1px black;
+	
+	
+}
+form.out {
+	
+	position: fixed;
+	bottom: 5%;
+	right: 5%;
+	
+	color: white;
+	
+	// border: 3px solid green;
+	padding: 10px;
+	
+
+}
+
+input {
+	margin: auto;
+	background-color: gray;
+	color: white;
+}
+
+
+	
+}
+img{
+	position: fixed;
+	
+}
