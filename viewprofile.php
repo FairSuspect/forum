@@ -1,7 +1,7 @@
 <?php
     //  вся процедура работает на сессиях. Именно в ней хранятся данные  пользователя, пока он находится на сайте. Очень важно запустить их в  самом начале странички!!!
     session_start();
-	$link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
+	$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
        if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
     echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;

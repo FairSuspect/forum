@@ -3,13 +3,13 @@
 <meta charset='utf-8'>
 <meta http-equiv="Content-Type" content="text/html" />
 <?php
-$link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
+$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
 if (!$link) 
 	{
 		echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
 		echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
 		echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
-		$link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
+		$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
 		if (!$link) 
 		{
 			echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -259,7 +259,7 @@ if(empty($_SESSION['user']))
 <a href='old.php'> Войдите</a> или <a href = '/accMng/registration.php'> зарегистрируйтесь</a>, чтобы ответить.</div>";
 else
 {
-		$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
+		$link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 	$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 	if ($res)

@@ -9,7 +9,7 @@
 session_start();
 if(isset($_SESSION['user']))
 {
-	$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
+	$link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 	$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 	if ($res)
