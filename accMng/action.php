@@ -13,7 +13,7 @@ if(isset($_POST['delete']))
 	      
 	$sql = "DELETE FROM `users` WHERE `users`.`id` = '{$_POST['delete']}'";
 	$result = mysqli_query($link,$sql) or dir("Ошибка: ".mysqli_error($link));
-	header("Location: manage.php");
+	header("Location: ../memberlist.php?p=0");
 	
 }
 
@@ -23,14 +23,14 @@ if(isset($_POST['upgrade']))
 	$sql = "UPDATE `users` SET `lvl`= '1' WHERE `users`.`id` = '{$_POST['upgrade']}' ";
 	$result = mysqli_query($link,$sql) or dir("Ошибка: ".mysqli_error($link));
 	
-	header("Location: manage.php");
+	header("Location: ../memberlist.php?p=0");
 }
 if(isset($_POST['downgrade']))
 {
 	     
 	$sql = "UPDATE `users` SET `lvl`= '0' WHERE `users`.`id` = '{$_POST['downgrade']}' ";
 	$result = mysqli_query($link,$sql) or dir("Ошибка: ".mysqli_error($link));
-	header("Location: manage.php");
+	header("Location: ../memberlist.php?p=0");
 }
 if (isset($_POST['confirm']))
 {
@@ -63,7 +63,7 @@ if (isset($_POST['confirm']))
 				{
 					die("Что-то пошло не так");
 				}
-				header("Location: manage.php");
+				header("Location: ../memberlist.php?p=0");
 				die("Почему ты ещё здесь?");
 				
 			}
@@ -75,8 +75,53 @@ if (isset($_POST['confirm']))
 				{
 					die("Что-то пошло не так");
 				}
-	header("Location: manage.php");
+	header("Location: ../memberlist.php?p=0");
 				die("Почему ты ещё здесь?");
+}
+if (isset($_GET['u']) && isset($_GET['key']))
+{
+	$sql = "SELECT `id`,`e-key` FROM `waiting` WHERE `id`={$_GET['u']}";
+	$res = mysqli_query($link,$sql) or die("Ошибка при выгрузке списка неподтверждённых пользователей: ".mysqli_error($link));
+	if($res)
+	{
+		$row = mysqli_fetch_row($res);
+		if($_GET['u'] == $row[0] && $_GET['key'] == $row[1])
+			{
+				$sql = "UPDATE `users` SET `lvl`= '0' WHERE `users`.`id` = '{$_GET['u']}' ";
+				$result = mysqli_query($link,$sql) or die("Ошибка: ".mysqli_error($link));
+				if(!$result)
+				{
+					echo "Не вышло обновить уровень <br>";
+					
+				}
+				else 
+				{
+					$sql = "DELETE FROM `waiting` WHERE `id` = '{$_GET['u']}'";
+					$del = mysqli_query($link,$sql) or die("Ошибка: ".mysqli_error($link));
+					if($del)
+					{
+						echo "Строчка из `waiting` удалена.";
+					}
+				}
+				header("Location: ../old.php");
+				$_SESSION['message'] = "<div style='max-width: 500px; margin: auto; border: 1px solid gray; background-color:#ccc;'> Ваша электронная почта подтверждена. Авторизуйтесь, чтобы пользоваться сайтом. </div>";
+				
+			}
+		else 
+			{
+			echo "Невалидная ссылка.<br>";
+			echo $_GET['u'];
+			echo " : ";
+			echo $row[0]."<br>";
+			echo $_GET['key'];
+			echo " : ";
+			echo $row[1]."<br>";
+
+			}
+
+	}
+	
+	
 }
 die("Я нигде не был");
 ?>

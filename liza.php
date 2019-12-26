@@ -7,6 +7,10 @@
 </head>
 <body>
 <h1 style='color: red; font-size:50;'>I'm </h1><br>
+<textarea> sdfdsfdssfdfdsf
+sdfsdfsdfsd
+fsdfsd
+fdsfdsf </textarea>
 <?php
 session_start();
 if(isset($_SESSION['user']))
@@ -44,6 +48,8 @@ $text =  <<<EOT
 Это должно вывести заглавную букву 'A': \x41
 EOT;
 echo "<i>".$text."</i>";
+
+
 ?>
 <div class= 'class'>
 <form action = 'liza.php' method = 'POST'>
@@ -73,7 +79,7 @@ if(isset($_POST['ok1']))
 	echo "<br> Hello, I'm {$_POST['name']} and I'm {$_POST['age']} old.";
 }
 $link = mysqli_connect("localhost","root","","users") or die("Ошибка. ".mysqli_error($link));
-$sql = "SELECT * FROM `users`";
+$sql = "SELECT * FROM `useful`";
 $res = mysqli_query($link,$sql);
 if($res)
 {
@@ -82,7 +88,7 @@ if($res)
 	for($i = 0; $i < $rows; $i++)
 	{
 		$row = mysqli_fetch_row($res);
-		echo "<br> {$row[0]} | {$row[1]} | {$row[2]}";
+		echo "<br> <b>{$row[0]}</b> | {$row[1]} | {$row[2]} | {$row[3]}";
 	}
 }
 $color = 0xF;
@@ -98,6 +104,15 @@ echo "<div style='color: #{$color}'>". $color."</div>";
 ?>
 
 <div style='color: #900'> Текст должен быть красным </div>
+<form method='POST'>
+	<button name='kn' value = '1'> Кнооопка</button>
+</form>
+<?php
+if(isset($_POST['kn']))
+{
+	echo "Кнопка нажата";
+}
+?>
 <br>
 <br>
 <div style = 'text-align: center; margin: 10px; border: 5px solid red; width:50%; padding: 10px'>
@@ -105,6 +120,29 @@ echo "<div style='color: #{$color}'>". $color."</div>";
 <form action = 'liza.php' method = 'POST'>
 	<label> Имя </label>
 	<input style = 'width:50px; type='text' name = 'name'>
+</form>
+
+<?Php
+session_save_path("test");
+session_start();
+define("MAX_IDLE_TIME", 3);
+function getOnlineUsers(){
+if ( $directory_handle = opendir( session_save_path() ) ) {
+$count = 0;
+while ( false !== ( $file = readdir( $directory_handle ) ) ) {
+if($file != '.' && $file != '..'){
+if(time()- filemtime(session_save_path() . '' . $file) < MAX_IDLE_TIME * 60) {
+$count++;
+}
+} }
+closedir($directory_handle);
+return $count;
+} else {
+return "error";
+}}
+echo 'Пользователей онлайн: ' . getOnlineUsers() . '<br />';
+echo "ses: ".session_save_path();
+?>
 </div>
 </body>
 

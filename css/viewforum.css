@@ -1,19 +1,3 @@
-div.quests{
-	border: 1px solid black; 
-	background-color: #eef;
-	//color: rgb(40,40,40);
-	margin: 0 auto;
-	padding: 20px;
-	//height: 50px;
-	font-size:18px;
-	min-width: 650px;
-	max-width: 900px;
-	
-	
-}
-div.quest{
-	border: 1px solid black;
-}
 body{
     font-family: Verdana, Helvetica, Arial, sans-serif;
     font-size: 8px;
@@ -21,28 +5,221 @@ body{
     margin: 0;
     padding: 12px 0;
     word-wrap: break-word;
-    -webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;	
+	background-color: rgba(140,140,255,0.4);
 	
-	background-color: rgba(100,100,255,0.4); 
+}
+div.quests{
+	border: 1px solid #9999AA; 
+	border-radius: 5px;
+	background-color: #ececff;
+	margin: 0 auto;
+	padding: 20px;
+	font-size:18px;
+	min-width: 150px;
+	max-width: 900px;
+	
+	
+}
+div.quest{
+	border: 1px solid black;
+}
+@media (max-width: 1920px) {#d1920{ display: block;}}
+@media (max-width: 770px) {#d770{display: none;}}
+tr:hover
+{
+	background-color: #e0e0ff;
+}
+
+div.nav{
+	background-color: rgba(180,180,255,0.7);
+	border:1px solid #cccccc;
+	border-radius: 7px;
+	padding: 7px;
+	margin: 3px 0;
+	font-size: 12pt;
+}
+a.nav{
+	text-decoration: none;
+	color: inherit;
+
+}
+
+.header{
+	margin: 0px 0px 15px 0px;
+	background-color: #5555BB;
+	padding: 10px;
+	color: #cccccc;
+	border: 1px #4444CC solid;
+	border-radius: 7px;
+
+
+}
+header{
+	margin: 0px 0px 15px 0px;
+	background-image: linear-gradient(to bottom, #6ACEFF 0%,#0076B1 2px,#12A3EB 92px,#12A3EB 100%);
+    background-repeat: repeat-x;
+	padding: 10px;
+	color: #EEE;
+	text-shadow: 2px 2px 2px #333;
+	border: 1px #4444CC solid;
+	border-radius: 7px;
 }
 a.question{
-	color: black;
+	
 	font-weight: bold;
 	font-size: 1em;
 	font-family: "Trebuchet MS", Helvetica, Arial, Sans-serif;
 	text-decoration: none;
 }
+.bef:before{
+	content: '\2039';
+}
+.fa-home:before {
+	content: "\f015";
+    font-family: FontAwesome;
+}
 a.question:hover {
 	text-decoration: underline;
 }
+.forum{
+border: 1px solid #9999AA;
+border-radius: 7px;
+background-color: rgba(100,100,255,0.4);
+padding: 5px;
+}
+.forumList{
+	display: block;
+    list-style-type: none;
+    margin: 0;
+}
+ul{
+	list-style: none;
+}
+div.log
+{
+	font-size: 12pt; 
+	font-weight: bold;
+}
+div.log::after
+{
+	content: '\f0dd';
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    padding-left: 6px;
+    padding-top: 2px;
+    vertical-align: top;
+}
+div.logg:hover{
+	display: block;
+}
+div.logg{
+	display: none;
+}
 a {
+	color: #3072A9;
     direction: ltr;
-    unicode-bidi: embed;
+	unicode-bidi: embed;
+	text-decoration: none;
+	font-weight: bold;
+}
+a:hover{
+	text-decoration: underline;
+	font-weight: bold;
+}
+a:visited{
+	color: #105289;;
 }
 table.quests{
-	border-bottom: 10px #5555BB solid;
-	border-top: 40px #5555BB solid;
-	border-left: 10px #5555BB solid;
-	border-right: 10px #5555BB solid;
+	
+	border-bottom: 10px #1283EB solid;
+	border-top: 30px #1283EB solid;
+	border-left: 10px #1283EB solid;
+	border-right: 10px #1283EB solid;
 	margin: 0 auto;
+	border-radius: 7px;
 }
+.makeQ
+{
+	margin: 0 0 15px 50%;
+	padding: 10px;
+	border: 1px solid black;
+	background-color:rgba(100,100,255,0.4);
+	max-width: 500px;
+	min-width: 100px;
+	font-size: 14px;
+	padding: 10px;
+	
+}
+.registration{
+	width: auto;
+	max-width: 300px;
+	min-width: 100px;
+	margin:auto;
+	text-align: center;
+	border: 5px solid rgba(0,0,0,0.5);
+	border-radius: 15px;
+}
+button.dwn:hover{
+background-color: rgba(255,200,200,0.8);
+color:red;
+}
+button.dwn {
+	color:white; 
+	background-color: red;
+}
+button.upd{
+	color:white; 
+	background-color: green;
+}
+button.upd:hover{
+	color: green;
+	background-color: rgba(100,205,100,0.8);
+}
+.auth{
+	text-align: right;
+	
+}
+
+
+footer{
+	background-color:rgba(200, 200, 255,0.7);
+	border: 1px #9999aa solid;
+	border-radius: 7px;
+	padding: 7px;
+	font-size: 10RNpt;
+}
+ul {
+    width: 180px; /* Ширина меню */
+    list-style: none; /* Для списка убираем маркеры */
+    margin: 0 1% 0 0 ; /* Нет отступов вокруг */
+    padding: 0; /* Убираем поля вокруг текста */
+    font-family: Arial, sans-serif; /* Рубленый шрифт для текста меню */
+    font-size: 10pt; /* Размер названий в пункте меню */
+   }
+   li ul {
+    position: fixed; /* Подменю позиционируются абсолютно */
+    display: none; /* Скрываем подменю */
+    margin-left: 0px; /* Сдвигаем подменю вправо */
+    margin-top: 0em; /* Сдвигаем подменю вверх */
+   }
+   li a {
+	text-align: right;
+    display: block; /* Ссылка как блочный элемент */
+    padding: 5px; /* Поля вокруг надписи */
+    text-decoration: none; /* Подчеркивание у ссылок убираем */
+    color: #666; /* Цвет текста */
+    border: 1px solid #ccc;/* Рамка вокруг пунктов меню */
+    background-color: rgba(205, 205, 255, 1); /* Цвет фона */
+    border-bottom: none; /* Границу снизу не проводим */
+   }
+   li a:hover {
+    color: #ffe; /* Цвет текста активного пункта */
+    background-color: #5488af; /* Цвет фона активного пункта */
+   }
+   li:hover ul { 
+    display: block; /* При выделении пункта курсором мыши отображается подменю */
+   }
+   .brd {
+    border-bottom: 1px solid #ccc; /* Линия снизу */
+   }

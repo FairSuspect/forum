@@ -16,9 +16,17 @@
 
     <h1>Главная страница</h1>
 	<?php 
+	if(isset($_SESSION['message']))
+		if(strlen($_SESSION['message']) > 0)
+		{
+			echo $_SESSION['message'];
+			unset($_SESSION['message']);
+		}
 	if(!empty($_SESSION['user']))
+	
 	{	
 		$link = mysqli_connect("localhost","root","","users");
+		echo "id: ".$_SESSION['u'];
 		$sql = "SELECT `id` FROM `users` WHERE `login` = '{$_SESSION['user']}'";
 		$res = mysqli_query($link,$sql) or die("Не удалось выполнить запрос: ".mysqli_error($link));
 		$row = mysqli_fetch_row($res);
@@ -30,7 +38,7 @@
 	else 
 	{		
 		echo "
-					<form   style = 'margin: auto; position:static; right:45%; width: 200px; border: 2px solid black; border-radius: 20px' width = '300px' action='accMng/login.php' method='post'> 
+					<form   style = margin: auto; position:static; right:45%; width: 200px; border: 2px solid black; border-radius: 20px' width = '300px' action='accMng/login.php' method='post'> 
 			
 					
 				 <p align = 'middle' >

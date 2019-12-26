@@ -13,26 +13,51 @@ $link = mysqli_connect("localhost","root","","users");
 <html>
 <head>
 	<meta charset='utf-8'>
-	<meta name='viewport'	 content=' width=device-width, user-scalable = yes'>
+	<meta name='viewport'	 content=' width=device-width, user-scalable = yes, initial-scale=1'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel = stylesheet href = "..\css\viewforum.css">
-	<title> Вопросы </title>
+<?php
+if(!isset($_GET['search']))
+{
+	$sql = "SELECT `title` from `forums` WHERE `id` = {$_GET['f']}";
+$res = mysqli_query($link,$sql) or die("Ошибка при получении названия топика: ".mysqli_error($link));
+if($res)
+	{
+		$row = mysqli_fetch_row($res);
+		echo "<title> {$row[0]}</title>";
+	}	
+}
+else echo "<title> Поиск</title>"
+?>
 <head>
 <body>
+
 <div class='quests'>
-<center><h1> Задай свой вопрос! </h1> </center> 
-<form method = 'GET' action = 'viewforum.php'>
-	<label> Выбери теги для поиска </label>
-	<input type='checkbox' name='C++' value = '0b1'> C++ </input>
-	<input type='checkbox' name='C' value = '0b10'> C</input>
-	<input type='checkbox' name='C#' value = '0b100'> C# </input>
-	<input type='checkbox' name='php' value = '0b1000'> php </input>
-	<input type='checkbox' name='web' value = '0b10000'> web </input>
-	<input type='checkbox' name='java' value = '0b100000'> java </input>
-	<input type='submit' value = 'Подтвердить' name = 'confirm'> </input>
-</form>
-<!---<div class= 'quests'> --->
-<?php if (empty($_SESSION['user'])) 
-	echo "<div style = 'height: 25px;position: relative; left: 63%; padding: 10px;border: 1px solid black; background-color:rgba(100,100,255,0.4); width: 30%;'>
+<div class='header'>
+	<h1> Крутой форум </h1>
+</div>
+<div class='nav' role = 'navigation'>
+	<span class = 'icon fa-home fa-fw'><a  href='index.php'> Главная страница </a></span>
+	<?php 
+	if(isset($_GET['search']))
+		echo "<span class= bef>  Поиск</a></span>";
+	else
+	 {
+		$sql = "SELECT `title` from `forums` WHERE `id` = {$_GET['f']}";
+		$res = mysqli_query($link,$sql) or die("Ошибка при получении названия форума: ".mysqli_error($link));
+		if($res)
+			{
+				$row = mysqli_fetch_row($res);
+				echo "<span class= bef> <a href='viewforum.php?f={$_GET['f']}'>{$row[0]}</a></span>";
+			}
+	}
+	?>
+</div>
+<?php 
+if(!isset($_GET['search']))
+{
+if (empty($_SESSION['user'])) 
+	echo "<div class='makeQ'>
 <a href='old.php'> Войдите</a> или <a href = '/accMng/registration.php'> зарегистрируйтесь</a>, чтобы ответить.</div>";
 else 
 	{
@@ -42,26 +67,31 @@ else
 		if ($res)
 			if (mysqli_num_rows($res) != 0)
 			{
-				echo "<br> <br><div align = 'right' style = 'padding: 10px;border: 1px solid black; background-color:rgba(100,100,255,0.4); width: 35%; font-size: 14px;'>
+				echo "<br> <br><div  class = 'makeQ'>
 				Вы не можете задавать вопросы, так как ваш аккаунт <a href='accMng/banned.php'> заморожен</a>.</div>";
 			}
 			else 
-				echo "<div align = 'right' style='padding: 10px;  width: 97%;'> <form action='create.php'> <button style = 'width=10px;' name='create' > Задать вопрос </button> </form></div>"; 
+				echo "<div align = 'right' > <form action='create.php' method = 'GET'> <button style = 'width:150px; height: 25px; margin: 0 35px -5px 0;' name='f' value = '{$_GET['f']}' > Новая тема</button> </form></div>"; 
 	}
 
-		
+	}	
 	
 ?>
 
 <table border='1px' class='quests'>
 	
 	<th width='60%'> Вопросы / Автор</th>
-	<th> Ответов </th>
-	<th> Просмотров </th>
-	<th> Последнее сообщение </th>
+	<th id='d770'> Ответов </th>
+	<th id ='d770'> Просмотров </th>
+	<th id='d770'> Последнее сообщение </th>
 	
 <?php 
-$sql = "SELECT * FROM `topics` WHERE `category` = '0' ORDER BY `lastRepDate` DESC";
+if(isset($_GET['search']))
+	if(isset($_GET['f']))
+		$sql ="SELECT * FROM `topics` WHERE `category` = '{$_GET['f']}'AND `title` LIKE '%{$_GET['search']}%' ORDER BY `lastRepDate` DESC";
+	else $sql ="SELECT * FROM `topics` WHERE `title` LIKE '%{$_GET['search']}%' ORDER BY `lastRepDate` DESC";
+else 
+	$sql = "SELECT * FROM `topics` WHERE `category` = '{$_GET['f']}' ORDER BY `lastRepDate` DESC";
 $res = mysqli_query($link,$sql) or die("Ошибка: ".mysqli_error($link));
 if($res)
 {	
@@ -70,7 +100,7 @@ if($res)
 	{
 		echo "<tr>";
 		$row = mysqli_fetch_row($res);
-		$cat = $row[5]; // id категории
+		$f = $row[5]; // id категории
 		$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `login`='{$row[1]}'");
 		$id = mysqli_fetch_row($str);
 		switch($id[1]){
@@ -85,7 +115,7 @@ if($res)
 			break;
 		}
 		$replies = mysqli_num_rows(mysqli_query($link,"SELECT parent FROM `replies` WHERE `parent` = {$row[0]}"));
-		echo "<td> <a class='question' href='viewtopic.php?cat={$cat}&t={$row[0]}'>".$row[2]."</a><br><i style='font-size: 14px;'> Вопрос задал: </i><a  style='font-size: 14px; color: #{$color};' href='viewprofile.php?u={$id[0]}'>    {$row[1]}</a></td>";
+		echo "<td> <a class='question' href='viewtopic.php?f={$f}&t={$row[0]}'>".$row[2]."</a><br><i style='font-size: 14px;'> <span class = bef> </i><a  style='font-size: 14px; color: #{$color};' href='viewprofile.php?u={$id[0]}'>    {$row[1]}</a></span></td>";
 		$str = mysqli_query($link,"SELECT `lvl` FROM `users` WHERE `login`='{$row[6]}'");
 		$id = mysqli_fetch_row($str);
 		switch($id[0]){
@@ -99,51 +129,26 @@ if($res)
 			$color = 'C00';
 			break;
 		}
-		echo "<td align='center'>{$replies}</td><td align='center'>{$row[8]}</td><td align='center'><a href = 'viewprofile.php?u={$id[0]}' style='font-size: 14px; color: #{$color};' >{$row[6]}</a><br>{$row[7]}</td></tr>";
-		//die("row6 and 7: ".$row[6]." / ".$row[7]);
+		echo "<td id='d770' align='center'>{$replies}</td><td id='d770' align='center'>{$row[8]}</td><td id='d770' align='center'><a href = 'viewprofile.php?u={$id[0]}' style='font-size: 14px; color: #{$color};' >{$row[6]}</a><br>{$row[7]}</td></tr>";
 	}
-	
 }
-
-
 ?>
-
+</table>
 <?php
-function IsChecked($chkname,$value)
-    {
-        if(!empty($_POST[$chkname]))
-        {
-            foreach($_POST[$chkname] as $chkval)
-            {
-                if($chkval == $value)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-	
-if(isset($_GET['confirm']))
-{
-	$tags = decbin($_GET['C++']+$_GET['C']+$_GET['C#']+$_GET['php']+$_GET['web']+$_GET['java']);
-	//echo 
-}
-if(isset($_GET['confirm']))
+if(!isset($_GET['search']))
+	if($_SESSION['lvl']==2)
 	{
-		$res=0;
-		if(isset($_GET['C++']))
-$res += IsChecked('C++','0b1') ? 0b1 : 0;
-$res += IsChecked('C','0b10') ? 0b10 : 0;
-$res += IsChecked('C#','0b100') ? 0b100 : 0;
-$res += IsChecked('php','0b1000') ? 0b1000 : 0;
-$res += IsChecked('web','0b10000') ? 0b10000 : 0;
-$res += IsChecked('java','0b100000') ? 0b100000 : 0;
-echo "<br>";
-echo $res;
+		echo "<div align= right><form action='access.php?f={$_GET['f']}' method=POST>
+		<button name=delF value = {$_GET['f']}> Удалить раздел </button>
+		</form></div>";
+
 	}
 ?>
-<a href='old.php'> Назад на главную </a>
+<nav style = 'text-align: center;'>
+<a href='old.php'> Назад на главную</a> | 
+<a href = 'memberlist.php?p=0'> Список пользователей</a> |
+<a href='logout.php'> Выйти из аккаунта </a>
+</nav>
 </div>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <title> Ваш аккаунт заморожен </title>
 </head>
 <body>
-<center style = 'border:3px solid black;width: 28%;margin:auto; border-radius: 25px; font-size: 20pt;'>
+<center style = 'padding: 15px; border:3px solid black;width: 28%;margin:auto; border-radius: 25px; font-size: 20pt;'>
 <?php
 session_start();
 if(isset($_SESSION['user']))
@@ -26,7 +26,7 @@ if(isset($_SESSION['user']))
 		echo "!fff <br>";
 
 echo "<br> <a href = '../old.php'> Ясно, на главную </a>";
-if(isset($_SESSION{'dir']))
+if(isset($_SESSION['dir']))
 	echo "<br> <a href = {$_SESSION['dir']}> Назад </a>";
 }
 else Header("Location: ../old.php")

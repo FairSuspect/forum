@@ -9,8 +9,7 @@
     exit;
 	   }
 	   
-$sql = "SELECT login, id FROM `users` WHERE `users`.`login` = '{$_SESSION['user']}' ";
-$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link)); 
+
     ?>
     <html>
     <head>
@@ -21,6 +20,8 @@ $result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link)
     </head>
     <body>
 	<?php 
+	$sql = "SELECT login, id FROM `users` WHERE `users`.`login` = '{$_SESSION['user']}' ";
+	$result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link)); 
 	$row = mysqli_fetch_row($result);
 	$id = $row[1];
 	echo "Это ваш личный кабинет, {$row[0]} <br>";
@@ -29,34 +30,24 @@ $result = mysqli_query($link, $sql) or die("Ошибка " . mysqli_error($link)
 		echo "<div style = 'background-color: RGBA(30,255,30,0.4); padding: 10px; border: 1px solid black; border-radius: 5px; width: 20%; '>".$_SESSION['mess']."</div><br>";
 		unset($_SESSION['mess']);
 	}
-	$check = 0;
-	$result = mysqli_query($link, "SELECT * FROM lk") or die("Ошибка: ".mysqli_error($link));
+	$result = mysqli_query($link, "SELECT * FROM `lk` WHERE `id` = '{$_GET['u']}'") or die("Ошибка: ".mysqli_error($link));
 	if ($result)
 	{
-		$rows = mysqli_num_rows($result);
-		for ($i  = 0; $i < $rows; $i++)
-		{
-			
 			$row = mysqli_fetch_row($result);
-			if ($row[1] == $_SESSION['user'])
+			if(!empty($row))
 			{
-				$check = 1;
-				break;
+				die($row[0]);
+				echo "<div style = ' padding: 10px; width:50%; background-color: rgba(90,90,180,0.2); border: 1px solid #115511; font-size:20pt;'>";
+				echo "Имя: ".$row[2]."<br>";
+				echo "Дата рождения: ".$row[3]."<br>
+				Информация о себе: ".$row[5]."<br></div>";
 			}
-		}
-		if ($check == 0)
-		{
-			echo "<br>Ваш личный кабинет ещё не настроен.<br>
-			<form action = 'lk.php' method = 'POST'> <button name = 'set'> Настроить </button> </form>";
-			
-		}
-		else {
-			echo "<div style = ' padding: 10px; width:50%; background-color: rgba(90,90,180,0.2); border: 1px solid #115511; font-size:20pt;'>";
-			echo "Имя: ".$row[2]."<br>";
-			echo "Дата рождения: ".$row[3]."<br>
-				Информация о себе: ".$row[5]."<br></div>
-			";
-		}
+			else 
+				{
+					echo "<br>Ваш личный кабинет ещё не настроен.<br>
+					<form action = 'lk.php' method = 'POST'> <button name = 'set'> Настроить </button> </form>";					
+				}
+
 		 
 	}
 	else die("!result");

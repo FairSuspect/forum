@@ -1,93 +1,167 @@
+<?php
+session_start();
+//$_SESSION['dir'] =PHP_INT_MIN;
+//die($_SESSION['dir']);
+$link = mysqli_connect("localhost","root","","users");
+ if (!$link) {
+    echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
+    echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
+    echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
+    exit;
+	}
+?>
 <html>
 <head>
-<title> Main Page </title>
-<?php 
-session_start();
-echo session_id();
-?>
-<link rel = stylesheet href = "css\index.css">
-</head>
+	<meta charset='utf-8'>
+	<meta name='viewport'	 content=' width=device-width, user-scalable = yes, initial-scale=1'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel = stylesheet href = "..\css\viewforum.css">
+	<title> Форум </title>
+<head>
 <body>
-<h1> <center> Nothing to do </h1> </center>
 
-<blockquote>ЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫ</blockquote> <cite> Джейсон Стэтхем </cite><center> ыы</center>  <div style = 'position: fixed; right: 10px; width: 20px; font-style: impact; text-align: right; color: red; background-color: blue; '>ы </div>
+<div class='quests'>
+<header>
+	<h1> ProgPeak Forum</h1>
+	<h3> Форум программистов 
+	<div style= 'margin-top:-15px' align= right> 
+		<form method = GET action = viewforum.php>
+			<input type =text name = search required>
+			<button> Найти </button>
+		</form>
+	</div>
+	</h3>
+</header>
+<div class='nav' role = 'navigation'>
+	<span class = 'icon fa-home fa-fw'><a  href='index.php'> Главная страница </a></span>
 
-<nav><a class="nav" href="old.php"> Old main page </a><a class="nav" href="old.php"> Old main page </a> <a class="nav" href="old.php"> Old main page </a> </nav></br>
-<abbr title="Организация Объединённый Наций"> ООН </abbr>
-<button> Что это </button> <br>
-<figure> код </figure>
-<hr>
-<a href = 'liza.php'> Lizochekkk </a>
-<div style = 'padding: 20px; width: 500px'> <hr> </div>
-<code>
-#include <iosteam> <br>
+
+
+<?php if (empty($_SESSION['user'])) 
+		echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
+	else 
+	{
+		$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `id`='{$_SESSION['u']}'");
+		$id = mysqli_fetch_row($str);
+		switch($id[1]){
+		case 0: 
+			$color='00C';
+			break;
+		case 1:
+			$color='0C0';
+			break;
+		case 2:
+			$color = 'C00';
+			break;
+		}
+		echo " <ul class='menu'>
+		<li><div align=right class='auth log' style ='color: #{$color};'> {$_SESSION['user']}</div>
+		 <ul> 
+		  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> 
+		  <li><a href='logout.php'>Выйти из аккаунта</a></li> 
+		 </ul> 
+		</li> 
+		</ul></div>";
+		$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
+		$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
+		if ($res)
+			if (mysqli_num_rows($res) == 0)
+			{
+				if($_SESSION['lvl']==2)
+					echo "<div align = 'right' > <form action='create.php' method = GET> <button name = 'f' value = '0' style = 'width:150px; height: 25px; margin: 0 35px -5px 0;' > Создать раздел </button> </form></div>"; 
+			}
+			
+				
+	}
+
 		
-int main(){ <br>
-	std::cout << "Hello, World!" << std:: endl; <br>
-return 0;
-} 
-		<br> <del> yoptaSctipt </del><cite>   C++ </cite>
 	
-</code> 
-<ins> Подчёркнутый текст </ins>
-<mark> Выделенный текст </mark>
-<q> Цитата </q>
-<br>
-Текст и <small> текст поменьше </small>
-<br>
-<strong > полужирный </strong> и <b> жирный </b>
-<br> 
-Введите <kbd> кирпич </kbd>
-<br>
-<option>
-<select> Кирпич </select>
-<select> Камень </select>
-</option>
-<br>
-X<sub>0</sub> <br>
-2<sup>10</sup> = 1024 
-<br>
-<dfn> Триггер </dfn> - простейший цифровой автомат (устройство с <em>памятью </em>). <br>
-<table style ='text-align: center;' width = '500px' border= '1px solid maroon'>
-<th> R<sub>(t)</sub> </th>
-<th> S<sub>(t)</sub> </th>
-<th> R<sub>(t+1)</sub> </th>
-<th> S<sub>(t+1)</sub> </th>
-<tr>
-	<td> 0 </td>
-	<td> 0 </td>
-	<td> R<sub>(t)</sub> </td>
-	<td> S<sub>(t)</sub> </td>
-</tr>
-<tr>
-	<td> 0 </td>
-	<td> 1 </td>
-	<td> R<sub>(t)</sub> </td>
-	<td> S<sub>(t)</sub> </td>
-</tr>
-<tr>
-	<td> 0 </td>
-	<td> 0 </td>
-	<td> R<sub>(t)</sub> </td>
-	<td> S<sub>(t)</sub> </td>
-</tr>
-<tr>
-	<td> 0 </td>
-	<td> 0 </td>
-	<td> R<sub>(t)</sub> </td>
-	<td> S<sub>(t)</sub> </td>
-</tr>
-<thead> Неправильная таблица истинности RS-триггера </thead>
+?>
+
+<table border='1px' class='quests'>
+	
+	<th width='60%'> Разделы</th>
+	<th id='d770'> Тем </th>
+	<th id ='d770'> Сообщений </th>
+	<th id='d770'> Последнее сообщение </th>
+	
+<?php 
+$res = mysqli_query($link,"SELECT * FROM `forums`") or die("Ошибка: ".mysqli_error($link));
+if($res)
+{	
+	$rows = mysqli_num_rows($res);
+	for($i = 0; $i < $rows; $i++)
+	{
+		echo "<tr>";
+		$row = mysqli_fetch_row($res);
+		$f = $row[0];
+		$ff = $i + 1;
+		$sql1 = "SELECT `author`,`lastRepDate` FROM `topics` WHERE `category` = '{$ff}' ORDER BY `lastRepDate` DESC";
+		$auth = "";
+		$resul = mysqli_query($link,$sql1) or die ("Ошибка при получении автора: ".mysqli_error($link));
+		if ($resul)
+		{
+			$a = mysqli_fetch_row($resul);
+			$auth = $a[0];
+			$time = $a[1];
+		}
+		$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `login`='{$auth}'");
+		$id = mysqli_fetch_row($str);
+		switch($id[1]){
+		case 0: 
+			$color='00C';
+			break;
+		case 1:
+			$color='0C0';
+			break;
+		case 2:
+			$color = 'C00';
+			break;
+		}
+		$res1 = mysqli_query($link,"SELECT category FROM `topics` WHERE `category` = {$f}");
+		$topics = 0;
+		if($res1)
+			$topics = mysqli_num_rows($res1);
+		$ress = mysqli_query($link,"SELECT category FROM `replies` WHERE `category` = {$f}");
+		$messages = 0;
+		if($ress)
+			$messages = mysqli_num_rows($ress);
+		
+		$result = mysqli_query($link,"SELECT author FROM `topics` ORDER BY `lastRepDate` DESC") or die("Ошибка при получении автора: ".mysqli_error($link));
+		if ($result)
+			{
+				$aut = mysqli_fetch_row($result);
+				$str = mysqli_query($link,"SELECT `lvl` FROM `users` WHERE `login`='{$aut[0]}'");
+				$id = mysqli_fetch_row($str);
+				switch($id[0]){
+				case 0: 
+					$color='00C';
+					break;
+				case 1:
+					$color='0C0';
+					break;
+				case 2:
+					$color = 'C00';
+					break;
+					}
+				echo "<td> <a class='question' href='viewforum.php?f={$f}'>".$row[1]."</a><br><i style='font-size: 14px;'></i></td>";
+				echo "<td id='d770' align='center'>{$topics}</td><td id='d770' align='center'>{$messages}</td><td id='d770' align='center'><a href = 'viewprofile.php?u={$id[0]}' style='font-size: 14px; color: #{$color};'>{$aut[0]}</a><br>{$time}</td></tr>";
+			}
+	}
+}
+?>
 </table>
-<i> iiiiii</i> <em> eemmmmm </em>
-<fieldset width = '100px'>
-<form width = '100px'>
-<input type = "text"> <br><br>
-<input type = "text"><br> <br>
-<input type = "submit"><br>
-</form>
-<legend> Имя, фамилия </legend>
-</fieldset>
-<p class = "alpha"> ALPHA </p>
+<br>
+<footer> <nav style = 'text-align: center;'>
+<a href = 'memberlist.php?p=0'> Список пользователей</a> |
+<a href='logout.php'> Выйти из аккаунта </a>
+</nav>
+<hr>
+<div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
+Легенда: <a href=memberlist.php?l=2 style = 'color: #C00'> Администраторы</a>, <a href=memberlist.php?l=1 style = 'color: #0C0'> Модераторы </a>
+</div>
+
+</footer>
+</div>
 </body>
 </html>

@@ -9,67 +9,74 @@ $link = mysqli_connect ("localhost","root","","users");
 <html>
     <head>
 	<meta charset="utf-8">
-	<link rel = stylesheet href = "..\css\main.css">
+	<link rel = stylesheet href = "..\css\viewforum.css">
     <title>Управление аккаунтами</title>
 	
     </head>
 <body>
-<h1 align = 'middle'> Управление аккаунтами </h1>
-<table align = 'center' style ='text-align: center;' width = '500px' border= '1px solid'>
-<th> id </th>
-<th> login </th>
-<th> Date of registration </th>
-<th> lvl </th>
-<th> Action </th>
+	<div class='quests'>
+
 <?php
-	$sql = "SELECT id, login, regDate, lvl FROM users";
-	$result = mysqli_query($link,$sql);
-	if($result)
+	if(!isset($_SESSION['user']))
+	   echo "Данная страница недоступна не авторизованным пользователям.<br> <a href='../old.php'>Назад на главную</a>";
+	else
 	{
-		$rows = mysqli_num_rows($result);
-		for($i = 0; $i < $rows; ++$i)
+		echo "<h1 align = 'middle'> Управление аккаунтами </h1>
+		<table align = 'center' style ='text-align: center;' width = '500px' border= '1px solid'>
+		<th> id </th>
+		<th> login </th>
+		<th> Date of registration </th>
+		<th> lvl </th>
+		<th> Action </th>";
+		$sql = "SELECT id, login, regDate, lvl FROM users";
+		$result = mysqli_query($link,$sql);
+		if($result)
 		{
-			echo "<tr>";
-			$row = mysqli_fetch_row($result);
-			for ($j = 0; $j < 4; $j++)
+			$rows = mysqli_num_rows($result);
+			for($i = 0; $i < $rows; ++$i)
 			{
-				echo "<td> {$row[$j]} </td>";
-			}
-			if ($row[3] < $_SESSION['lvl'])
-			{
-				echo "<td> <form action = 'action.php' method = 'POST'>
-						<button name = 'delete' value = '{$row[0]}' style = 'color:white; background-color: red'> X </button>";
-				
-				if(isset($_POST['suspend']))
+				echo "<tr>";
+				$row = mysqli_fetch_row($result);
+				for ($j = 0; $j < 4; $j++)
 				{
-					if($_POST['suspend'] == $row[1])
-						echo "<form action = 'action.php' method = 'POST'>
-								<select  style = 'color:white; background-color: red' name = 'time'> 								
-								<option value = '10000'> 1 hour </option>
-								<option value = '1000000'> 1 day </option>
-								<option value = '7000000'> 1 week </option>
-								<option value = '100000000'> 1 month </option>
-								<option value = '10000000000'> 1 year </option>
-							</select>
-							<input type = 'text' name = 'reason'>
-							<button value = '{$_POST['suspend']}' name='confirm'></button>✓</input> </form>";
-					
+					echo "<td> {$row[$j]} </td>";
 				}
-			if ($row[3] != 1 && $_SESSION['lvl']> 1)
-				echo "<button action = 'manage.php' name = 'upgrade' value = '{$row[0]}' style = 'color:white; background-color: green'> + </button></form>";
-			elseif ($row[3] == 1 && $_SESSION['lvl']>1)
-				echo "<button action = 'manage.php' name = 'downgrade' value = '{$row[0]}' style = 'color:white; background-color: red'> - </button></form>";
-			echo "</form>";
-			echo " <button name = 'suspend' value = '{$row[1]}' style = 'color:white; background-color: red'> Ban </button></td>";
+				if ($row[3] < $_SESSION['lvl'])
+				{
+					echo "<td> <form action = 'action.php' method = 'POST'>
+							<button name = 'delete' value = '{$row[0]}' style = 'color:white; background-color: red'> X </button>";
+					
+					if(isset($_POST['suspend']))
+					{
+						if($_POST['suspend'] == $row[1])
+							echo "<form action = 'action.php' method = 'POST'>
+									<select  style = 'color:white; background-color: red' name = 'time'> 								
+									<option value = '10000'> 1 hour </option>
+									<option value = '1000000'> 1 day </option>
+									<option value = '7000000'> 1 week </option>
+									<option value = '100000000'> 1 month </option>
+									<option value = '10000000000'> 1 year </option>
+								</select>
+								<input type = 'text' name = 'reason'>
+								<button value = '{$_POST['suspend']}' name='confirm'></button>✓</input> </form>";
+						
+					}
+					if ($row[3] != 1 && $_SESSION['lvl']> 1)
+						echo "<button action = 'manage.php' name = 'upgrade' value = '{$row[0]}' style = 'color:white; background-color: green'> + </button></form>";
+					elseif ($row[3] == 1 && $_SESSION['lvl']>1)
+						echo "<button action = 'manage.php' name = 'downgrade' value = '{$row[0]}' style = 'color:white; background-color: red'> - </button></form>";
+					echo "</form>";
+					echo " <button name = 'suspend' value = '{$row[1]}' style = 'color:white; background-color: red'> Ban </button></td>";
+				}
+				else echo "<td> </td>";
+				echo "</tr>";
 			}
-			else echo "<td> </td>";
-			echo "</tr>";
 		}
 	}
 
 ?>
 </table>
-<nav> <a href='../old.php'> Old </a>  |  |  <a href='../index.php'> Main </a>
+<center><nav> <a href='../old.php'> Old </a>  |  |  <a href='../index.php'> Main </a></center>
 <?php /*
 if(isset($_POST['delete']))
 {
@@ -93,5 +100,6 @@ if(isset($_POST['downgrade']))
 	header("Location: manage.php");
 }
 */?>
+</div>
 </body>
 </html>
