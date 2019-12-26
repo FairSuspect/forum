@@ -25,7 +25,7 @@
 	if(!empty($_SESSION['user']))
 	
 	{	
-		$link = mysqli_connect("localhost","root","","users");
+		$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
 		echo "id: ".$_SESSION['u'];
 		$sql = "SELECT `id` FROM `users` WHERE `login` = '{$_SESSION['user']}'";
 		$res = mysqli_query($link,$sql) or die("Не удалось выполнить запрос: ".mysqli_error($link));

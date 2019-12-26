@@ -6,8 +6,7 @@ div.quests{
 	padding: 30px;
 	background-color: #eef;
 	margin: 0 auto;
-
-	font-size:18px;
+	font-size:14pt;
 	min-width: 650px;
 	max-width: 900px;
 	box-shadow: inset 0px 0px 4px 0px #cacaca;
@@ -144,4 +143,13 @@ a.nav{
 }
 a:visited{
 color: inherit;
+}
+div.topic {
+	padding: 30px;
+	background-color: #eef;
+	margin: 0 auto;
+	font-size:12pt;
+	min-width: 650px;
+	max-width: 900px;
+	box-shadow: inset 0px 0px 4px 0px #cacaca;
 }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $_SESSION['mes'] = '';
-        $link = mysqli_connect ("localhost","root","","users");
+        $link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
        if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
     echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;

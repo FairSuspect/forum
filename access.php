@@ -10,7 +10,7 @@
 	<div class = 'quests'>
 <?php
 session_start() ;
-	$link = mysqli_connect ("localhost","root","","users");
+	$link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
     if (!$link) 
 	{
 		echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -58,7 +58,7 @@ if(isset($_POST['del'])) // удаление топика
 	$res = mysqli_query($link,$sql) or die("Ошибка при удалении топика: ".mysqli_error($link)."id: {$_POST['del']}");
 	if($res)
 	{
-		echo "<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ваш вопрос был успешно удалён! </div>";
+		echo "<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ваша тема была успешно удалена! </div>";
 	}
 	$sql = "DELETE FROM `replies` WHERE `parent` = '{$_POST['del']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при удалении ответов на топик: ".mysqli_error($link));
@@ -97,8 +97,8 @@ if(isset($_POST['delRep'])) // удаление одного ответа
 							$update = mysqli_query($link,$upd) or die("Ошибка при установке автора и ответа: ".mysqli_error($link));
 							if($update)
 							{
-								echo "<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ваш вопрос был успешно удалён! </div>";
-								echo "<a href='viewforum.php?f={$_GET['f']}'> Назад, к вопросам </a>";
+								echo "<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ответ успешно удалён! </div>";
+								echo "<a href='viewforum.php?f={$_GET['f']}'> Назад к разделу </a>";
 							}
 							
 						}

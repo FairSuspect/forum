@@ -2,7 +2,7 @@
 session_start();
 //$_SESSION['dir'] =PHP_INT_MIN;
 //die($_SESSION['dir']);
-$link = mysqli_connect("localhost","root","","users");
+$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
  if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
     echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
@@ -33,11 +33,21 @@ else echo "<title> Поиск</title>"
 <body>
 
 <div class='quests'>
-<div class='header'>
-	<h1> Крутой форум </h1>
-</div>
+<header>
+	<h1> ProgPeak Forum</h1>
+	<h3> Форум программистов 
+	<div style= 'margin-top:-15px' align= right> 
+	<?php // ----------------------------------- Поиск ------------------------------ //
+	echo "	<form method = GET action = viewforum.php?f={$_GET['f']}> 
+			<input type =text name = search value placeholder='Поиск...' required>
+			<button name = f value = {$_GET['f']}> Найти </button>"; ?>
+		</form>
+	</div>
+	</h3>
+</header>
 <div class='nav' role = 'navigation'>
-	<span class = 'icon fa-home fa-fw'><a  href='index.php'> Главная страница </a></span>
+	<div>
+	<a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
 	<?php 
 	if(isset($_GET['search']))
 		echo "<span class= bef>  Поиск</a></span>";
@@ -51,17 +61,44 @@ else echo "<title> Поиск</title>"
 				echo "<span class= bef> <a href='viewforum.php?f={$_GET['f']}'>{$row[0]}</a></span>";
 			}
 	}
+	echo "</div>";
+	if (empty($_SESSION['user'])) 
+		echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
+else 
+{
+	$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `id`='{$_SESSION['u']}'");
+	$id = mysqli_fetch_row($str);
+	switch($id[1]){
+	case 0: 
+		$color='00C';
+		break;
+	case 1:
+		$color='0C0';
+		break;
+	case 2:
+		$color = 'C00';
+		break;
+	}
+	echo " <ul class='menu'>
+	<li><div align=right class='auth log' style ='color: #{$color};'> {$_SESSION['user']}</div>
+	 <ul> 
+	  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> 
+	  <li><a href='logout.php'>Выйти из аккаунта</a></li> 
+	 </ul> 
+	</li> 
+	</ul></div>";					
+}
+
 	?>
-</div>
+
 <?php 
 if(!isset($_GET['search']))
 {
 if (empty($_SESSION['user'])) 
 	echo "<div class='makeQ'>
-<a href='old.php'> Войдите</a> или <a href = '/accMng/registration.php'> зарегистрируйтесь</a>, чтобы ответить.</div>";
+<a href='auth.php?i=0&f={$_GET['f']}'> Войдите</a> или <a href = 'auth.php?i=1&f={$_GET['f']}'> зарегистрируйтесь</a>, чтобы ответить.</div>";
 else 
 	{
-		$link = mysqli_connect("localhost","root","","users");
 		$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
 		$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 		if ($res)
@@ -136,6 +173,7 @@ if($res)
 </table>
 <?php
 if(!isset($_GET['search']))
+	if(isset($_SESSION['lvl']))
 	if($_SESSION['lvl']==2)
 	{
 		echo "<div align= right><form action='access.php?f={$_GET['f']}' method=POST>
@@ -144,11 +182,16 @@ if(!isset($_GET['search']))
 
 	}
 ?>
-<nav style = 'text-align: center;'>
-<a href='old.php'> Назад на главную</a> | 
+<footer> <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a> |
 <a href='logout.php'> Выйти из аккаунта </a>
 </nav>
+<hr>
+<div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
+Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
+</div>
+
+</footer>
 </div>
 </body>
 </html>

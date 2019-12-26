@@ -2,7 +2,7 @@
 session_start();
 //$_SESSION['dir'] =PHP_INT_MIN;
 //die($_SESSION['dir']);
-$link = mysqli_connect("localhost","root","","users");
+$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
  if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
     echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
@@ -26,14 +26,14 @@ $link = mysqli_connect("localhost","root","","users");
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 		<form method = GET action = viewforum.php>
-			<input type =text name = search required>
+			<input type =text name = search  value placeholder='Поиск...'required>
 			<button> Найти </button>
 		</form>
 	</div>
 	</h3>
 </header>
 <div class='nav' role = 'navigation'>
-	<span class = 'icon fa-home fa-fw'><a  href='index.php'> Главная страница </a></span>
+<a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
 
 
 

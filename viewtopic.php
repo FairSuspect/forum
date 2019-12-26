@@ -3,7 +3,7 @@
 <meta charset='utf-8'>
 <meta http-equiv="Content-Type" content="text/html" />
 <?php
-$link = mysqli_connect ("localhost","root","","users");
+$link = mysqli_connect ("localhost","Kirill","q123123q","kirill_forum");
 if (!$link) 
 	{
 		echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -28,6 +28,7 @@ if (!$link)
 	?>
  
 <link rel = stylesheet href = "css\viewtopic.css"> 
+<link rel = stylesheet href = "css\viewforum.css"> 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 </head>
@@ -42,11 +43,21 @@ $_SESSION['mes'] = '';
 
 
 ?>
-<div class='header'>
-	<h1> Крутой форум </h1>
-</div>
+<header>
+	<h1> ProgPeak Forum</h1>
+	<h3> Форум программистов 
+	<div style= 'margin-top:-15px' align= right> 
+	<?php // ----------------------------------- Поиск ------------------------------ //
+	echo "	<form method = GET action = viewforum.php?f={$_GET['f']}> 
+			<input type =text name = search value placeholder='Поиск...' required>
+			<button name = f value = {$_GET['f']}> Найти </button>"; ?>
+		</form>
+	</div>
+	</h3>
+</header>
 <div class='nav' role = 'navigation'>
-	<span class = 'icon fa-home fa-fw'><a  href='index.php'> Главная страница </a></span>
+	<div>
+	<a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
 	<?php 
 		$sql = "SELECT `title` from `forums` WHERE `id` = {$_GET['f']}";
 		$res = mysqli_query($link,$sql) or die("Ошибка при получении названия форума: ".mysqli_error($link));
@@ -63,7 +74,35 @@ $_SESSION['mes'] = '';
 				}
 			}
 	?>
-</div>
+	</div>
+	<?php
+	if (empty($_SESSION['user'])) 
+	echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
+else 
+{
+$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `id`='{$_SESSION['u']}'");
+$id = mysqli_fetch_row($str);
+switch($id[1]){
+case 0: 
+	$color='00C';
+	break;
+case 1:
+	$color='0C0';
+	break;
+case 2:
+	$color = 'C00';
+	break;
+}
+echo " <ul class='menu'>
+<li><div align=right class='auth log' style ='color: #{$color};'> {$_SESSION['user']}</div>
+ <ul> 
+  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> 
+  <li><a href='logout.php'>Выйти из аккаунта</a></li> 
+ </ul> 
+</li> 
+</ul></div>";					
+}
+?>
 <?php
 	if(isset($_GET['p']))
 	{
@@ -121,7 +160,7 @@ if($res)
 	$row = mysqli_fetch_row($res);
 	if(empty($row))
 	{
-		die("<div class='quests'> Данного топика не существует. <br> Понятно, назад к <a href='viewforum.php?f={$_GET['f']}'>вопросам</a>.");
+		die("<div class='topic'> Данного топика не существует. <br> Понятно, назад к <a href='viewforum.php?f={$_GET['f']}'>вопросам</a>.");
 	}
 	$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `login`='{$row[1]}'");
 	$id = mysqli_fetch_row($str);
@@ -137,7 +176,7 @@ if($res)
 			$color = 'C00';
 			break;
 		}
-		echo "<div class='quests'><h3>".$row[2]."</h3> <div> Вопрос задал <a class = 'user' style=' color: #{$color};' href='viewprofile.php?u={$id[0]}'> {$row[1]}</a>, {$row[4]}";
+		echo "<div class='topic'><h3>".$row[2]."</h3> <div> <a class = 'user' style=' color: #{$color};' href='viewprofile.php?u={$id[0]}'> {$row[1]}</a> {$row[4]}";
 		if (isset($_SESSION['user']))
 			if ($row[1]==$_SESSION['user'] || $lvl[0] > 0)
 			{
@@ -185,7 +224,7 @@ if($res)
 			$color = 'C00';
 			break;
 		}
-		echo "<div class='quests'>
+		echo "<div class='topic'>
 				<dl class = 'user'>
 				<dt><a class = 'user' style=' color: #{$color};' href='viewprofile.php?u={$id[0]}'>  {$row[1]}</a></dt> 
 				<dd>{$row[3]}</dd>";
@@ -198,7 +237,7 @@ if($res)
 				if (isset($_SESSION['user']))
 					if ($row[1]==$_SESSION['user'] || $lvl[0] > 0)
 					{
-						echo "<form align = 'right' action='access.php' method='POST'>";
+						echo "<form align = 'right' action='access.php?f={$_GET['f']}' method='POST'>";
 						echo "<button name = 'delRep' value ='{$row[4]}' style='color:white; background-color:red'> X </button>";
 						echo "<button name = 'edit' value = '{$row[4]}'> Ред. </button> </form>";
 					}
@@ -220,7 +259,7 @@ if(empty($_SESSION['user']))
 <a href='old.php'> Войдите</a> или <a href = '/accMng/registration.php'> зарегистрируйтесь</a>, чтобы ответить.</div>";
 else
 {
-		$link = mysqli_connect("localhost","root","","users");
+		$link = mysqli_connect("localhost","Kirill","q123123q","kirill_forum");
 	$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 	if ($res)
@@ -233,7 +272,7 @@ else
 			echo "<form style = 'padding:10px;'method = 'POST' action='access.php?f={$_GET['f']}'>
 				<label> Быстрый ответ </label> <br>
 				<textarea rows = 7 col = 21  name = 'text' required> </textarea><br><br>
-				 <button name = 'submitRep' value = '{$_GET['t']}'> Отправить </button><br>"; 
+				 <button name = 'submitRep' value = '{$_GET['t']}'> Отправить </button><br></form>"; 
 }			
 	
 	 ?>
@@ -282,12 +321,24 @@ else{
 				else
 					echo "<a href='viewtopic.php?f={$_GET['f']}&t={$_GET['t']}&p={$i}'><li class='page'> {$i} </li></a>";
 			}
-			echo "</nav>";
+			echo "</ul></nav>";
 		}
 }
 ?>
+<?php echo "<a href='viewforum.php?f={$_GET['f']}'> Назад </a><br>"; ?>
 <br>
-<?php echo "<a href='viewforum.php?f={$_GET['f']}'> Назад </a>"; ?>
+
+<footer> 
+<nav style = 'text-align: center;'>
+<a href = 'memberlist.php?p=0'> Список пользователей</a> |
+<a href='logout.php'> Выйти из аккаунта </a>
+</nav>
+<hr>
+<div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
+Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
+</div>
+
+</footer>
 </div>
 </body>
 </html>
