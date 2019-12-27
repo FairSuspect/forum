@@ -51,7 +51,6 @@ if($banlist)
 					echo "<div style = 'text-align: center; font-size: 30pt; color: green;'> Successful login </br></div>";	
 					$_SESSION['user'] = $_POST['login'];
 					$_SESSION['u'] = $row[3];
-
 					$lvl = mysqli_query($link, "SELECT `lvl` FROM `users` WHERE `users`.`login` = '{$_POST['login']}' ") or die("Ошибка " . mysqli_error($link)); 
 					$row = mysqli_fetch_row($lvl);
 					$_SESSION['lvl'] = $row[0];						

@@ -68,13 +68,16 @@ elseif ($_GET['f'] == 0 && $_SESSION['lvl'] < 2 )
 	<h3> Новая тема </h3>
 	<hr>
 	<?php 
-	$sql = "SELECT `title` from `forums` WHERE `id` = {$_GET['f']}";
-	$res = mysqli_query($link,$sql) or die("Ошибка при получении названия форума: ".mysqli_error($link));
-	if($res)
+	if(isset($_GET['f']))
+		if($_GET['f']!= 0)
 		{
-			$row = mysqli_fetch_row($res);
-			echo "<a href='viewforum.php?f={$_GET['f']}'>{$row[0]}</a>";
-		}
+		$sql = "SELECT `title` from `forums` WHERE `id` = {$_GET['f']}";
+		$res = mysqli_query($link,$sql) or die("Ошибка при получении названия форума: ".mysqli_error($link));
+		if($res)
+			{
+				$row = mysqli_fetch_row($res);
+				echo "<a href='viewforum.php?f={$_GET['f']}'>{$row[0]}</a>";
+			}}
 	?>
 <?php echo "<form style = 'padding:10px;'method = 'POST' action='access.php?f={$_GET['f']}'>";?>
 	<label> Заголовок</label> <br>
