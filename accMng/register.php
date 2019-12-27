@@ -36,7 +36,7 @@ $salt = mt_rand(100, 999);
 $tm = time();
 $_POST['password'] = md5(md5($_POST['password']).$salt);
 $regdata = "INSERT INTO `users` (`login`, `pass`,`salt`,`e-mail`,`lvl`) VALUES ( '{$_POST['login'] }','{$_POST['password']}','{$salt}','{$_POST['e-mail']}','0')";
-$register = mysqli_query($link, $regdata);
+$register = mysqli_query($link, $regdata) or die("Ошибка при регистрации: ".mysqli_error($link)."<br> <a href = '../index.php'> Назад на главную </a>");
 if (!$register)
 {
 	echo "Error :( </br>";
