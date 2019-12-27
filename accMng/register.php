@@ -35,7 +35,7 @@ if (strlen($_SESSION['mes'])>0)
 $salt = mt_rand(100, 999);
 $tm = time();
 $_POST['password'] = md5(md5($_POST['password']).$salt);
-$regdata = "INSERT INTO `users` (`login`, `pass`,`salt`,`e-mail`) VALUES ( '{$_POST['login'] }','{$_POST['password']}','{$salt}','{$_POST['e-mail']}')";
+$regdata = "INSERT INTO `users` (`login`, `pass`,`salt`,`e-mail`,`lvl`) VALUES ( '{$_POST['login'] }','{$_POST['password']}','{$salt}','{$_POST['e-mail']}','0')";
 $register = mysqli_query($link, $regdata);
 if (!$register)
 {
@@ -43,37 +43,8 @@ if (!$register)
 	echo $regdata;
 }
 else
-	{
-        echo "Регистрирую..<br>";
-        $sql = "SELECT `id` FROM `users` WHERE `login`='{$_POST['login']}'";
-        $res = mysqli_query($link,$sql) or die("Ошибка при загрузке логина: ".mysqli_error($link));
-        if($res)
-        {       
-
-                $id = mysqli_fetch_row($res);
-                $key = md5(md5($_POST['login']).$salt);
-                $sql = "INSERT INTO `waiting` (`id`,`login`,`e-mail`,`e-key`,`salt`) VALUES ( '{$id[0]}','{$_POST['login']}','{$_POST['e-mail']}','{$key}','{$salt}')";
-                $add = mysqli_query($link,$sql);
-                echo "Зарегистрировал, пытаемся сделать письмо..<br>";
-                if($add)
-                {
-                        echo "<fieldset><legend> Имитация электронного письма </legend>";
-                        $message = "Здравствуйте, ваша почта была введена при регистрации на форуме ###.
-                        Для подтверждения электронной почты, пройдите по этой <a href='action.php?u={$id[0]}&key={$key}'>ссылке</a>.
-                        Если вы нигде не регистрировались, то просто проигнорируйте это письмо.</filedset>";
-                        $subject = "Подтвердите регистрацию на ###";
-                        echo $subject;
-                        echo "<br>";
-                        echo $message;
-                        //mail();
-                }
-                else die("Ошибка при 'создании сообщения': ".mysqli_error($link));
-		
-        }
-               
-}
-
-
-
+        header("Location:../index.php");
+        $_SESSION['mes'] = "<div style = 'width:500px; background-color: rgba(100,255,100,0.8); color: black; border: 1px solid black; text-align:center;
+        margin: 5px 0 5px 0;' >Аккаунт успешно зарегистрирован </div>";
+        exit;
 ?>
-<a class="nav" href="../old.php"> Old main page </a>

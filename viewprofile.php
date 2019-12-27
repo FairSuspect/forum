@@ -1,5 +1,4 @@
 <?php
-    //  вся процедура работает на сессиях. Именно в ней хранятся данные  пользователя, пока он находится на сайте. Очень важно запустить их в  самом начале странички!!!
     session_start();
 	$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
        if (!$link) {
@@ -8,8 +7,6 @@
     echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
     exit;
 	   }
-	   
-
     ?>
     <html>
     <head>
@@ -17,22 +14,31 @@
 	<link rel = stylesheet href = "..\css\viewforum.css">
     <title>Личный кабинет</title>
 	<link rel = stylesheet href='css/viewprofile.css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     </head>
 	<body style = 'font-size:12pt;' >
 	<div class='quests'>
+	<header>
+	<h1> ProgPeak Forum</h1>
+	<h3> Форум программистов 
+	<div style= 'margin-top:-15px' align= right> 
+		<form method = GET action = viewforum.php>
+			<input type =text name = search  value placeholder='Поиск...'required>
+			<button> Найти </button>
+		</form>
+	</div>
+	</h3>
+</header>
 	<?php 
-
 	if(isset($_SESSION['mess']))
 	{
 		echo "<div style = 'background-color: RGBA(30,255,30,0.4); padding: 10px; border: 1px solid black; border-radius: 5px; width: 20%; '>".$_SESSION['mess']."</div><br>";
 		unset($_SESSION['mess']);
 	}
 	$sql = "SELECT * FROM `lk` WHERE `id` = '{$_GET['u']}'";
-
 	$result = mysqli_query($link, $sql) or die("Ошибка: ".mysqli_error($link));
 	if ($result)
-	{
-		
+	{	
 		$row = mysqli_fetch_row($result);
 		$col = mysqli_query($link,"SELECT `lvl` FROM `users` WHERE `id` = '{$_GET['u']}'") or die("Ошибка при запросе lvl: ".mysqli_error($link));
 		$color = mysqli_fetch_row($col);
@@ -85,7 +91,6 @@
 			}
 				else
 					{
-
 						if(empty($row))
 						{							
 							echo "<br>Пользователь еще не настроил свой личный кабинет.<br>";						
@@ -97,15 +102,10 @@
 							echo "Имя: ".$row[2]."<br>";
 							echo "Дата рождения: ".$row[3]."<br>
 							Информация о пользователе: ".$row[5]."<br></div>";
-						
-						}
-						
-				
-					} 
-		
+						}					
+					} 		
 	}
-	else die("!result");
-	
+	else die("!result");	
 	if (isset($_POST['set']))
 	{
 		echo "<form action = 'viewprofile.php?u={$_GET['u']}' method = 'POST'>
@@ -123,10 +123,7 @@
 				</p> <br>
 				<button name = 'confirm'> Готово </button>    
 				<button name = 'cancel'> Отмена </button><br>
-				</form>
-		
-		";
-		
+				</form>";		
 	}
 	if (isset($_POST['confirm']))
 	{
@@ -143,12 +140,12 @@
 	if (isset($_POST['cancel']))
 		unset($_POST['set']);
 	?>
-	
-	<a href = '../old.php'> Old </a>
-	<form align = 'center' class= 'out' action='old.php' method = 'POST'>
-				<input name='logout' type='submit' value = 'Выйти из аккаунта'> </br>
-				</form>
-</div>
-	</body>
-	
-</html>
+	<br>
+<footer> <nav style = 'text-align: center;'>
+<a href = 'memberlist.php?p=0'> Список пользователей</a> |
+<a href='logout.php'> Выйти из аккаунта </a>
+</nav>
+<hr>
+<div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
+Легенда: <a href=memberlist.php?l=2 style = 'color: #C00'> Администраторы</a>, <a href=memberlist.php?l=1 style = 'color: #0C0'> Модераторы </a>
+</div></footer></div></body></html>

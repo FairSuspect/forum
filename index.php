@@ -1,7 +1,5 @@
 <?php
 session_start();
-//$_SESSION['dir'] =PHP_INT_MIN;
-//die($_SESSION['dir']);
 $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
  if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -17,7 +15,7 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel = stylesheet href = "..\css\viewforum.css">
 	<title> Форум </title>
-<head>
+</head>
 <body>
 
 <div class='quests'>
@@ -34,9 +32,6 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 </header>
 <div class='nav' role = 'navigation'>
 <a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
-
-
-
 <?php if (empty($_SESSION['user'])) 
 		echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
 	else 
@@ -69,22 +64,20 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 			{
 				if($_SESSION['lvl']==2)
 					echo "<div align = 'right' > <form action='create.php' method = GET> <button name = 'f' value = '0' style = 'width:150px; height: 25px; margin: 0 35px -5px 0;' > Создать раздел </button> </form></div>"; 
-			}
-			
-				
+			}			
+	}	
+	if(isset($_SESSION['mes']))
+	{
+		echo $_SESSION['mes'];
+		unset($_SESSION['mes']);
 	}
-
-		
-	
 ?>
-
 <table border='1px' class='quests'>
 	
 	<th width='60%'> Разделы</th>
 	<th id='d770'> Тем </th>
 	<th id ='d770'> Сообщений </th>
-	<th id='d770'> Последнее сообщение </th>
-	
+	<th id='d770'> Последнее сообщение </th>	
 <?php 
 $res = mysqli_query($link,"SELECT * FROM `forums`") or die("Ошибка: ".mysqli_error($link));
 if($res)
@@ -159,9 +152,4 @@ if($res)
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
 Легенда: <a href=memberlist.php?l=2 style = 'color: #C00'> Администраторы</a>, <a href=memberlist.php?l=1 style = 'color: #0C0'> Модераторы </a>
-</div>
-
-</footer>
-</div>
-</body>
-</html>
+</div></footer></div></body></html>

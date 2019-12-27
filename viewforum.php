@@ -1,7 +1,5 @@
 <?php
 session_start();
-//$_SESSION['dir'] =PHP_INT_MIN;
-//die($_SESSION['dir']);
 $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
  if (!$link) {
     echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
@@ -31,7 +29,6 @@ else echo "<title> Поиск</title>"
 ?>
 <head>
 <body>
-
 <div class='quests'>
 <header>
 	<h1> ProgPeak Forum</h1>
@@ -87,11 +84,7 @@ else
 	 </ul> 
 	</li> 
 	</ul></div>";					
-}
-
-	?>
-
-<?php 
+} 
 if(!isset($_GET['search']))
 {
 if (empty($_SESSION['user'])) 
@@ -103,25 +96,18 @@ else
 		$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 		if ($res)
 			if (mysqli_num_rows($res) != 0)
-			{
 				echo "<br> <br><div  class = 'makeQ'>
 				Вы не можете задавать вопросы, так как ваш аккаунт <a href='accMng/banned.php'> заморожен</a>.</div>";
-			}
 			else 
 				echo "<div align = 'right' > <form action='create.php' method = 'GET'> <button style = 'width:150px; height: 25px; margin: 0 35px -5px 0;' name='f' value = '{$_GET['f']}' > Новая тема</button> </form></div>"; 
 	}
-
-	}	
-	
+}		
 ?>
-
 <table border='1px' class='quests'>
-	
 	<th width='60%'> Вопросы / Автор</th>
 	<th id='d770'> Ответов </th>
 	<th id ='d770'> Просмотров </th>
-	<th id='d770'> Последнее сообщение </th>
-	
+	<th id='d770'> Последнее сообщение </th>	
 <?php 
 if(isset($_GET['search']))
 	if(isset($_GET['f']))
@@ -179,7 +165,6 @@ if(!isset($_GET['search']))
 		echo "<div align= right><form action='access.php?f={$_GET['f']}' method=POST>
 		<button name=delF value = {$_GET['f']}> Удалить раздел </button>
 		</form></div>";
-
 	}
 ?>
 <footer> <nav style = 'text-align: center;'>
@@ -189,9 +174,4 @@ if(!isset($_GET['search']))
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
 Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
-</div>
-
-</footer>
-</div>
-</body>
-</html>
+</div></footer></div></body></html>

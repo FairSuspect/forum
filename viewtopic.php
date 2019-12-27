@@ -33,15 +33,10 @@ if (!$link)
 
 </head>
 <body>
-<div class='quests'>
-	
+<div class='quests'>	
 <?php
 session_start();
 $_SESSION['mes'] = '';
-
-//$_SESSION['dir'] =__FILE__;
-
-
 ?>
 <header>
 	<h1> ProgPeak Forum</h1>
@@ -155,8 +150,7 @@ if(isset($_SESSION['user']))
 $sql = "SELECT * FROM `topics` WHERE `category`='{$_GET['f']}' AND `id`='{$_GET['t']}'";
 $res = mysqli_query($link,$sql) or die("Ошибка при выгрузке вопроса: ".mysqli_error($link));
 if($res)
-{
-	
+{	
 	$row = mysqli_fetch_row($res);
 	if(empty($row))
 	{
@@ -190,10 +184,6 @@ if($res)
 		if(!empty($row[9]))
 			echo "<div style='text-align:right; font-size: 12pt;'>Последний раз обновлялось: {$row[9]} </div>";
 		echo "</div></div>";
-		
-		
-	
-	
 }
 $sql = "";
 if(isset($_GET['p']))
@@ -244,22 +234,16 @@ if($res)
 				echo " </dl>";
 				echo "<div class='postBody'>
 				{$row[2]}
-				</div>";
-				
-				
-		
+				</div>";	
 		echo "</div>";
 	}
-	
 }
-
-
 if(empty($_SESSION['user']))
 	echo "<br> <br><div style = 'padding: 10px;border: 1px solid black; background-color:rgba(100,100,255,0.4); width: 25%;'>
 <a href='old.php'> Войдите</a> или <a href = '/accMng/registration.php'> зарегистрируйтесь</a>, чтобы ответить.</div>";
 else
 {
-		$link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
+	$link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 	$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
 	if ($res)
@@ -273,9 +257,8 @@ else
 				<label> Быстрый ответ </label> <br>
 				<textarea rows = 7 col = 21  name = 'text' required> </textarea><br><br>
 				 <button name = 'submitRep' value = '{$_GET['t']}'> Отправить </button><br></form>"; 
-}			
-	
-	 ?>
+}				
+?>
 <br>
 <?php
 if(isset($_GET['p']))
@@ -301,7 +284,6 @@ if(isset($_GET['p']))
 	}
 	else 
 	{
-		
 			header("Location: viewtopic.php?t={$_GET['t']}&f={$_GET['f']}");
 			exit;					
 	}
@@ -327,18 +309,11 @@ else{
 ?>
 <?php echo "<a href='viewforum.php?f={$_GET['f']}'> Назад </a><br>"; ?>
 <br>
-
 <footer> 
 <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a> |
 <a href='logout.php'> Выйти из аккаунта </a>
-</nav>
-<hr>
+</nav><hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
 Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
-</div>
-
-</footer>
-</div>
-</body>
-</html>
+</div></footer></div></body></html>

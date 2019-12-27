@@ -1,8 +1,5 @@
-<html>
-
-
-<head>
-<meta name='viewport'	 content=' width=device-width, user-scalable = yes'>
+<html><head>
+	<meta name='viewport'	 content=' width=device-width, user-scalable = yes'>
 <link rel = stylesheet href='/css/viewforum.css'>
 <link rel = stylesheet href = "css\viewtopic.css"> 
 </head>
@@ -18,16 +15,13 @@ session_start() ;
 		echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
 		exit;
 	   }
-	
 if(isset($_POST['submit']))
 {
 	$date = mysqli_query($link,"SELECT NOW()");
 	$time= mysqli_fetch_row($date);
 	echo $time[0];
 	if($_GET['f']!=0)
-	{
-		
-		
+	{	
 		$sql = "INSERT INTO `topics`(`author`,`title`,`text`,`category`,`lastRepAut`,`lastRepDate`) VALUES ('{$_SESSION['user']}','{$_POST['title']}','{$_POST['text']}','{$_GET['f']}','{$_SESSION['user']}','{$time[0]}')";
 		$res = mysqli_query($link, $sql) or die("Ошибка: ".mysqli_error($link));
 		if ($res)
@@ -50,23 +44,17 @@ if(isset($_POST['submit']))
 		echo "<a href='viewforum.php?f={$_GET['f']}'> Назад к разделу</a>";
 	}
 }
-
 if(isset($_POST['del'])) // удаление топика
 {
 	
 	$sql = "DELETE FROM `topics` WHERE `id` = '{$_POST['del']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при удалении топика: ".mysqli_error($link)."id: {$_POST['del']}");
 	if($res)
-	{
 		echo "<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ваша тема была успешно удалена! </div>";
-	}
 	$sql = "DELETE FROM `replies` WHERE `parent` = '{$_POST['del']}'";
 	$res = mysqli_query($link,$sql) or die("Ошибка при удалении ответов на топик: ".mysqli_error($link));
-	if ($res) 	
-	{
-		echo "<br> <a href = 'viewforum.php?f={$_GET['f']}'>Назад к темам</a>";
-		
-	}
+	if ($res)
+		echo "<br> <a href = 'viewforum.php?f={$_GET['f']}'>Назад к темам</a>";	
 }
 
 if(isset($_POST['delRep'])) // удаление одного ответа
@@ -120,7 +108,6 @@ if(isset($_POST['delRep'])) // удаление одного ответа
 		}
 	}
 }
-
 if(isset($_POST['submitRep'])) // отправка ответа
 {
 	$sql = "INSERT INTO `replies`(`author`,`text`,`parent`,`category`) VALUES ('{$_SESSION['user']}','{$_POST['text']}','{$_POST['submitRep']}','{$_GET['f']}')";
@@ -149,7 +136,6 @@ EOT;
 	header("Location: viewtopic.php?f={$_GET['f']}&t={$_POST['submitRep']}");
 	die("<div style = 'padding: 10px; background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Ответ успешно создан! </div><a href='viewforum.php?f={$_GET['f']}'> Назад к вопросам</a>");
 }
-
 if(isset($_POST['upd']))
 {
 	echo "Добавление к сообщению: <br>";
@@ -165,7 +151,6 @@ $sql = "SELECT text FROM `topics` WHERE `id` = '{$_POST['upd']}'";
 		<button name='updB' value = {$_POST['upd']} > Сохранить </button>
 		</form>";
 }
-
 if(isset($_POST['updB']))
 {
 $sql = "SELECT `lastUpd` FROM `topics` WHERE `id` = {$_POST['updB']}";
@@ -215,8 +200,4 @@ if(isset($_POST['yes']))
 		exit;
 	}
 }
-?>
-
-</div>
-</body>
-</html>
+?></div></body></html>
