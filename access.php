@@ -160,6 +160,7 @@ $sql = "SELECT text FROM `topics` WHERE `id` = '{$_POST['upd']}'";
 	}
 	echo "<form action='access.php' method='POST'>
 		<textarea name='upd'> </textarea>
+		<input type = number style='display:none' name = f value = {$_GET['f']}>
 		<button name='updB' value = {$_POST['upd']} > Сохранить </button>
 		</form>";
 }
@@ -189,7 +190,7 @@ if($result)
 						$sql = "UPDATE  `topics` SET `lastUPD` = NOW()";
 						$UPD = mysqli_query($link,$sql) or die("Ошибка при обновлении времени последнего UPD: ".mysqli_error($link));
 					}
-				header("Location: viewtopic.php?f={$_GET['f']}&t={$_POST['updB']}");
+				header("Location: viewtopic.php?f={$_POST['f']}&t={$_POST['updB']}");
 				exit;
 				}
 	}
