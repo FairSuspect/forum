@@ -24,12 +24,13 @@ if($res)
 {
         $rows = mysqli_num_rows($res);
 if ($rows != 0)		
+
         $_SESSION['mes'] = $_SESSION['mes']."<br> Такой логин уже существует. <br>";
 unset($rows);
 }
 if (strlen($_SESSION['mes'])>0)
 {
-	header("Location: ../accMng/registration.php");
+	header("Location: ../auth.php?f={$_GET['f']}");
 	die (strlen($_SESSION['mes']));
 }
 $salt = mt_rand(100, 999);
