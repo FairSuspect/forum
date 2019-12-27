@@ -37,8 +37,8 @@ if(isset($_POST['submit']))
 	}
 	else 
 	{
-		$sql = "INSERT INTO `forums`(`title`) VALUES ('{$_POST['title']}')";
-		$res = mysqli_query($link, $sql) or die("Ошибка: ".mysqli_error($link));
+		$sql = "INSERT INTO `forums` (`title`) VALUES ('{$_POST['title']}')";
+		$res = mysqli_query($link, $sql) or die("Ошибка при создании раздела: ".mysqli_error($link));
 		if ($res)
 			echo "<div style = 'padding:10px;background-color: rgba(50,255,50,0.4); border: 1px solid black; width: 25%; margin: auto;'>Тема успешно создана! </div>";			
 		echo "<a href='viewforum.php?f={$_GET['f']}'> Назад к разделу</a>";

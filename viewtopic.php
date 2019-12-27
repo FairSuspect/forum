@@ -9,14 +9,7 @@ if (!$link)
 		echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
 		echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
 		echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
-		$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
-		if (!$link) 
-		{
-			echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;
-			echo "Код ошибки errno: " . mysqli_connect_errno() . PHP_EOL;
-			echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
-			exit;
-		}   
+		exit;
 	}
 	$sql = "SELECT `title` from `topics` WHERE `id` = {$_GET['t']}";
 	$res = mysqli_query($link,$sql) or die("Ошибка при получении названия топика: ".mysqli_error($link));
