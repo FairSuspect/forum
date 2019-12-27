@@ -1,10 +1,22 @@
 <html><head>
 	<meta name='viewport'	 content=' width=device-width, user-scalable = yes'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel = stylesheet href='/css/viewforum.css'>
 <link rel = stylesheet href = "css\viewtopic.css"> 
 </head>
 <body>
 	<div class = 'quests'>
+	<header>
+	<h1> ProgPeak Forum</h1>
+	<h3> Форум программистов 
+	<div style= 'margin-top:-15px' align= right> 
+		<form method = GET action = viewforum.php>
+			<input type =text name = search  value placeholder='Поиск...'required>
+			<button> Найти </button>
+		</form>
+	</div>
+	</h3>
+</header>
 <?php
 session_start() ;
 	$link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
