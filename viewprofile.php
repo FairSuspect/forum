@@ -29,6 +29,50 @@
 	</div>
 	</h3>
 </header>
+<div class='nav' role = 'navigation'>
+<a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
+<?php if (empty($_SESSION['user'])) 
+		echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
+	else 
+	{
+		$str = mysqli_query($link,"SELECT `id`,`lvl` FROM `users` WHERE `id`='{$_SESSION['u']}'");
+		$id = mysqli_fetch_row($str);
+		switch($id[1]){
+		case 0: 
+			$color='00C';
+			break;
+		case 1:
+			$color='0C0';
+			break;
+		case 2:
+			$color = 'C00';
+			break;
+		}
+		echo " <ul class='menu'>
+		<li><div align=right class='auth log' style ='color: #{$color};'> {$_SESSION['user']}</div>
+		 <ul> 
+		  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> ";
+		  if(isset($_SESSION['user']))
+		  echo "<li><a href='logout.php'>Выйти из аккаунта</a></li> ";
+		  echo "
+		 </ul> 
+		</li> 
+		</ul></div>";
+		$sql = "SELECT * FROM `suspend` WHERE login='{$_SESSION['user']}'";
+		$res = mysqli_query($link,$sql) or die("Ошибка при запросе: ".mysqli_error($link)) ;
+		if ($res)
+			if (mysqli_num_rows($res) == 0)
+			{
+				if($_SESSION['lvl']==2)
+					echo "<div align = 'right' > <form action='create.php' method = GET> <button name = 'f' value = '0' style = 'width:150px; height: 25px; margin: 0 35px -5px 0;' > Создать раздел </button> </form></div>"; 
+			}			
+	}	
+	if(isset($_SESSION['mes']))
+	{
+		echo $_SESSION['mes'];
+		unset($_SESSION['mes']);
+	}
+?>
 	<?php 
 	if(isset($_SESSION['mess']))
 	{

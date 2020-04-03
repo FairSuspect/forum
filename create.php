@@ -90,7 +90,7 @@ elseif ($_GET['f'] == 0 && $_SESSION['lvl'] < 2 )
 	<label> Заголовок</label> <br>
 	<input type='text' name = 'title' required> <br><br>
 	<label> Текст </label> <br>
-	<textarea style = 'width: 25%; height: 10%;' name = 'text' required> </textarea><br><br>
+	<textarea style = 'width: 25%; height: 10%;' name = 'text' required></textarea><br><br>
 	<input type='submit' name = 'submit'>  </input><br>
 	<br>
 <footer> <nav style = 'text-align: center;'>

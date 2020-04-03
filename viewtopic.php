@@ -222,12 +222,31 @@ if($res)
 					{
 						echo "<form align = 'right' action='access.php?f={$_GET['f']}' method='POST'>";
 						echo "<button name = 'delRep' value ='{$row[4]}' style='color:white; background-color:red'> X </button>";
-						echo "<button name = 'edit' value = '{$row[4]}'> Ред. </button> </form>";
 					}
-				echo " </dl>";
-				echo "<div class='postBody'>
-				{$row[2]}
-				</div>";	
+				echo " </dl>"; 
+				/*echo "<div class='postBody'>
+				{$row[2]} 
+				</div>";
+				*/				
+				//        Возможный фикс использования HTML тэгов (не работает из-за ДОМ)
+				?>
+				<script>
+				
+					<?php echo "let text{$i} = document.createElement('div'); ";
+					echo "text{$i}.setAttribute('class','postBody');";
+					
+					echo "var node{$i} = document.createElement('div');";
+					echo "node{$i}.innerText = '{$row[2]}';";
+					
+					echo "text{$i}.appendChild('node{$i}');";
+						
+					echo "let divP{$i} = document.getElementsByClassName('topic')[{$i}];";
+					
+					echo "divP.appendChild('text{$i}');";
+					?>
+					</script>
+					<?php
+					
 		echo "</div>";
 	}
 }

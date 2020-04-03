@@ -52,8 +52,10 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 		echo " <ul class='menu'>
 		<li><div align=right class='auth log' style ='color: #{$color};'> {$_SESSION['user']}</div>
 		 <ul> 
-		  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> 
-		  <li><a href='logout.php'>Выйти из аккаунта</a></li> 
+		  <li><a href='viewprofile.php?u={$_SESSION['u']}'>Профиль </a></li> ";
+		  if(isset($_SESSION['user']))
+		  echo "<li><a href='logout.php'>Выйти из аккаунта</a></li> ";
+		  echo "
 		 </ul> 
 		</li> 
 		</ul></div>";
