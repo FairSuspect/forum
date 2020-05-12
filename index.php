@@ -148,8 +148,10 @@ if($res)
 </table>
 <br>
 <footer> <nav style = 'text-align: center;'>
-<a href = 'memberlist.php?p=0'> Список пользователей</a> |
-<a href='logout.php'> Выйти из аккаунта </a>
+<a href = 'memberlist.php?p=0'> Список пользователей</a>
+<?php if [isset($_SESSION['user'])
+echo "| <a href='logout.php'> Выйти из аккаунта </a>";
+?>
 </nav>
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
