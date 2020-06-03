@@ -14,7 +14,7 @@ session_start();
     <body>
         <div class='quests'>
         <header>
-	<h1> ProgPeak Forum</h1>
+	<h1 href = './index.php'> ProgPeak Forum</h1>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 		<form method = GET action = viewforum.php>
@@ -27,65 +27,77 @@ session_start();
  <?php 
 if(isset($_GET['i'])&&isset($_GET['f']))
 {
-    if($_GET['i']==1)
-        {   
-            echo "
-            <form class= 'registration' action='../accMng/register.php?f={$_GET['f']}' method='post'>
-            <h2>Регистрация</h2>
-        <p>
-            <label>Ваш логин:<br></label>
-            <input name='login' type='text' size='20' maxlength='20'>
-        </p>
-        <p>
-            <label>Ваш e-mail:<br></label>
-            <input name='e-mail' type='text' size='20' maxlength='40'>
-        </p>
-        <p>
-            <label>Ваш пароль:<br></label>
-            <input name='password' type='password' size='20' maxlength='20'>
-        </p>
-        <p>
-            <input type='submit' name='submit' value='Зарегистрироваться'>
-        </p></form>";
-        ?>
-        <?php
-        if (!isset($_SESSION['mes']))
-            $_SESSION['mes']= '';
-        else
-            echo "<div style = 'color:red;'> {$_SESSION['mes']}</div>";
-        } 
-    elseif($_GET['i']==0 )
+    switch($_GET['i'])
     {
-        echo "
-        <form class= 'registration' action='../accMng/login.php?f={$_GET['f']}' method='post'>
-        <h2>Авторизация</h2>
-    <p>
-        <label>Ваш логин:<br></label>
-        <input name='login' type='text' size='20' maxlength='20'>
-    </p>
-    <p>
-        <label>Пароль:<br></label>
-        <input name='password' type='password' size='20' maxlength='20'>
-    </p>
-    <p>
-        <button name = log> Вход </button><br>
-        Ещё нет аккаунта? <a href=auth.php?i=1> Зарегистрируйтесь! </a>
-        
-    </p></form>";
-    if (!isset($_SESSION['mes']))
-        $_SESSION['mes']= '';
-    else
-        echo "<div style = 'color:red;'> {$_SESSION['mes']}</div>";
-    }
-    else {
+        case 0:
+            {
+                echo "
+                <form class= 'registration' action='../accMng/login.php?f={$_GET['f']}' method='post'>
+                <h2>Авторизация</h2>
+            <p>
+                <label>Ваш логин:<br></label>
+                <input name='login' type='text' size='20' maxlength='20'>
+            </p>
+            <p>
+                <label>Пароль:<br></label>
+                <input name='password' type='password' size='20' maxlength='20'>
+            </p>
+            <p>
+                <button name = log> Вход </button><br>
+                Ещё нет аккаунта? <a href=auth.php?i=1> Зарегистрируйтесь! </a>
+                
+            </p></form>";
+            if (!isset($_SESSION['mes']))
+                $_SESSION['mes']= '';
+            else
+                echo "<div style = 'color:red;'> {$_SESSION['mes']}</div>";
+            }
+            else {
+                header("Location: index.php");
+                exit;
+            }
+        break;
+        case 1:
+            {   
+                echo "
+                <form class= 'registration' action='../accMng/register.php?f={$_GET['f']}' method='post'>
+                <h2>Регистрация</h2>
+            <p>
+                <label>Ваш логин:<br></label>
+                <input name='login' type='text' size='20' maxlength='20'>
+            </p>
+            <p>
+                <label>Ваш e-mail:<br></label>
+                <input name='e-mail' type='text' size='20' maxlength='40'>
+            </p>
+            <p>
+                <label>Ваш пароль:<br></label>
+                <input name='password' type='password' size='20' maxlength='20'>
+            </p>
+            <p>
+                <input type='submit' name='submit' value='Зарегистрироваться'>
+            </p></form>";
+            ?>
+            <?php
+            if (!isset($_SESSION['mes']))
+                $_SESSION['mes']= '';
+            else
+                echo "<div style = 'color:red;'> {$_SESSION['mes']}</div>";
+            } 
+        break;
+        default: 
         header("Location: index.php");
         exit;
     }
 
+
 }
-else {
+else 
+{
     header("Location: index.php");
     exit;
 }
 ?>
-</div></body></html>
+        </div>
+    </body>
+</html>

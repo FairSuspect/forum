@@ -1,1 +1,0 @@
-<h1><center><color = blue> Hi </color></center></h1>

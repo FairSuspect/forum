@@ -17,7 +17,7 @@ $link = mysqli_connect ("localhost","kirill","q123123q","kirill_forum");
 <body>
 <div class='quests'>
 <header>
-	<h1> ProgPeak Forum</h1>
+<h1 href = './index.php'> ProgPeak Forum</h1>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 		<form method = GET action = viewforum.php>
