@@ -20,7 +20,7 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 
 <div class='quests'>
 <header>
-	<h1> ProgPeak Forum</h1>
+	<a class = 'header' style = 'text-decoration: none:' href = 'index.php'><h1> ProgPeak Forum</h1> </a>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 		<form method = GET action = viewforum.php>
@@ -31,7 +31,7 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 	</h3>
 </header>
 <div class='nav' role = 'navigation'>
-<a  href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
+<a href='index.php'><span class = 'icon fa-home fa-fw'> Главная страница </span></a>
 <?php if (empty($_SESSION['user'])) 
 		echo "<div align=right class=auth> <a href = auth.php?i=0&f=0> Вход </a> <a href = auth.php?i=1&f=0> Регистрация </a></div></div>";
 	else 
@@ -74,7 +74,7 @@ $link = mysqli_connect("localhost","kirill","q123123q","kirill_forum");
 		unset($_SESSION['mes']);
 	}
 ?>
-<table border='1px' class='quests'>
+<table border = 1px class='quests'>
 	
 	<th width='60%'> Разделы</th>
 	<th id='d770'> Тем </th>
@@ -149,11 +149,12 @@ if($res)
 <br>
 <footer> <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a>
-<?php if [isset($_SESSION['user'])
-echo "| <a href='logout.php'> Выйти из аккаунта </a>";
+<?php 
+	if (isset($_SESSION['user']))
+		echo "| <a href='logout.php'> Выйти из аккаунта </a>";
 ?>
 </nav>
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
-Легенда: <a href=memberlist.php?l=2 style = 'color: #C00'> Администраторы</a>, <a href=memberlist.php?l=1 style = 'color: #0C0'> Модераторы </a>
+Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
 </div></footer></div></body></html>
