@@ -19,7 +19,7 @@
 	<body style = 'font-size:12pt;' >
 	<div class='quests'>
 	<header>
-	<h1> ProgPeak Forum</h1>
+	<h1 href = './index.php'> ProgPeak Forum</h1>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 		<form method = GET action = viewforum.php>
@@ -187,9 +187,12 @@
 	<br>
 <footer> <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a> |
-<a href='logout.php'> Выйти из аккаунта </a>
+<?php
+if(!empty($_SESSION['user'])
+	echo "<a href='logout.php'> Выйти из аккаунта </a>";
+?>
 </nav>
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
-Легенда: <a href=memberlist.php?l=2 style = 'color: #C00'> Администраторы</a>, <a href=memberlist.php?l=1 style = 'color: #0C0'> Модераторы </a>
+Легенда: <a href='memberlist.php?l=2' style = 'color: #C00'> Администраторы</a>, <a href='memberlist.php?l=1' style = 'color: #0C0'> Модераторы </a>
 </div></footer></div></body></html>

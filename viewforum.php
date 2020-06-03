@@ -31,7 +31,7 @@ else echo "<title> Поиск</title>"
 <body>
 <div class='quests'>
 <header>
-	<h1> ProgPeak Forum</h1>
+<h1 href = './index.php'> ProgPeak Forum</h1>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 	<?php // ----------------------------------- Поиск ------------------------------ //
@@ -169,7 +169,10 @@ if(!isset($_GET['search']))
 ?>
 <footer> <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a> |
-<a href='logout.php'> Выйти из аккаунта </a>
+<?php
+if(!empty($_SESSION['user'])
+	echo "<a href='logout.php'> Выйти из аккаунта </a>";
+?>
 </nav>
 <hr>
 <div style = 'font-size: 12pt; margin: 5px 0 5px 0'>
