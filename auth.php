@@ -14,18 +14,20 @@ session_start();
     <body>
         <div class='quests'>
         <header>
-	<h1 href = './index.php'> ProgPeak Forum</h1>
-	<h3> Форум программистов 
-	<div style= 'margin-top:-15px' align= right> 
-		<form method = GET action = viewforum.php>
-			<input type =text name = search  value placeholder='Поиск...'required>
-			<button> Найти </button>
-		</form>
-	</div>
-	</h3>
-</header>
+            <a class = 'headerLink' style = 'text-decoration: none:' href = 'index.php'>
+                <h1> ProgPeak Forum</h1> 
+            </a>
+            <h3> Форум программистов 
+                <div style= 'margin-top:-15px' align= right> 
+                    <form method = GET action = viewforum.php>
+                        <input type =text name = search  value placeholder='Поиск...'required>
+                        <button> Найти </button>
+                    </form>
+                </div>
+            </h3>
+        </header>
  <?php 
-if(isset($_GET['i'])&&isset($_GET['f']))
+if( isset($_GET['i']) && isset($_GET['f']) )
 {
     switch($_GET['i'])
     {
@@ -44,7 +46,7 @@ if(isset($_GET['i'])&&isset($_GET['f']))
             </p>
             <p>
                 <button name = log> Вход </button><br>
-                Ещё нет аккаунта? <a href=auth.php?i=1> Зарегистрируйтесь! </a>
+                Ещё нет аккаунта? <a href=auth.php?i=1&f=0> Зарегистрируйтесь! </a>
                 
             </p></form>";
             if (!isset($_SESSION['mes']))
@@ -52,10 +54,7 @@ if(isset($_GET['i'])&&isset($_GET['f']))
             else
                 echo "<div style = 'color:red;'> {$_SESSION['mes']}</div>";
             }
-            else {
-                header("Location: index.php");
-                exit;
-            }
+        
         break;
         case 1:
             {   
@@ -77,8 +76,6 @@ if(isset($_GET['i'])&&isset($_GET['f']))
             <p>
                 <input type='submit' name='submit' value='Зарегистрироваться'>
             </p></form>";
-            ?>
-            <?php
             if (!isset($_SESSION['mes']))
                 $_SESSION['mes']= '';
             else
@@ -86,8 +83,9 @@ if(isset($_GET['i'])&&isset($_GET['f']))
             } 
         break;
         default: 
-        header("Location: index.php");
-        exit;
+            header("Location: index.php");
+            exit;
+        
     }
 
 

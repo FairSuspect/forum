@@ -116,6 +116,18 @@ div.logg:hover{
 div.logg{
 	display: none;
 }
+a.headerLink {
+	text-decoration: none;
+	color: white;
+
+}
+a.headerLink:visited{
+	color: white;
+}
+a.headerLink:hover{
+	color: white;
+	text-decoration: none;
+}
 a {
 	color: #3072A9;
     direction: ltr;

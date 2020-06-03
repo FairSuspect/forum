@@ -32,7 +32,9 @@ session_start();
 $_SESSION['mes'] = '';
 ?>
 <header>
-<h1 href = './index.php'> ProgPeak Forum</h1>
+<a class = 'headerLink' style = 'text-decoration: none:' href = 'index.php'>
+	<h1> ProgPeak Forum</h1> 
+</a>
 	<h3> Форум программистов 
 	<div style= 'margin-top:-15px' align= right> 
 	<?php // ----------------------------------- Поиск ------------------------------ //
@@ -325,7 +327,7 @@ else{
 <nav style = 'text-align: center;'>
 <a href = 'memberlist.php?p=0'> Список пользователей</a> |
 <?php
-if(!empty($_SESSION['user'])
+if(!empty($_SESSION['user']))
 	echo "<a href='logout.php'> Выйти из аккаунта </a>";
 ?>
 </nav><hr>
